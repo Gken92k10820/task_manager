@@ -12,7 +12,7 @@ from django.views.generic import TemplateView
 class TodoView(viewsets.ModelViewSet):       
     serializer_class = TodoSerializer          
     queryset = Todo.objects.all() 
-    
+
 class ReactAppView(TemplateView):
     template_name = 'index.html'
 

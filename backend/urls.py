@@ -14,15 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from todo import views                            
-from rest_framework import routers                    
-from django.urls import path, include, re_path             
-
-router = routers.DefaultRouter()                      
-router.register(r'tasks', views.TodoView, 'task')     
+from django.urls import path, include
 
 urlpatterns = [
-    path('', views.ReactAppView, name='react-app'),
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),                
+    path('todo/', include('todo.urls')),
 ]
