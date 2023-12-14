@@ -26,5 +26,5 @@ router.register(r'tasks', views.TodoView, 'task')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    re_path(r'^.*', TemplateView.as_view(template_name='index.html')),  # Catch all other URLs and serve the React app                
+    re_path(r'^.*', TemplateView.as_view(template_name='frontend/build/index.html')),  # Catch all other URLs and serve the React app                
 ]
