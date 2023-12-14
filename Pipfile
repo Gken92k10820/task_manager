@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 gunicorn = "*"
+waitress = "*"
+gevent = "*"
 
 [dev-packages]
 
