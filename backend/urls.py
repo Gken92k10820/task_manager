@@ -16,15 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from todo import views                            
 from rest_framework import routers                    
-from django.urls import path, include, re_path
-
-from django.views.generic import TemplateView              
+from django.urls import path, include, re_path             
 
 router = routers.DefaultRouter()                      
 router.register(r'tasks', views.TodoView, 'task')     
 
 urlpatterns = [
+    path('', views.ReactAppView, name='react-app'),
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    re_path(r'^.*', TemplateView.as_view(template_name='frontend/build/index.html')),  # Catch all other URLs and serve the React app                
+    path('api/', include(router.urls)),                
 ]
