@@ -6,18 +6,17 @@ class CustomModal extends Component {
     super(props);
     this.state = {
       activeItem: this.props.activeItem,
-      backendData: null // Add a state to store data from the backend
+      backendData: null,
+      modalIsOpen: true, // Use state for modal open/close
     };
   }
 
   componentDidMount() {
-    // Fetch data from the Django backend when the component mounts
     this.fetchDataFromBackend();
   }
 
   fetchDataFromBackend = () => {
-    // Update the apiUrl to match your Django backend URL
-    const apiUrl = 'https://taskmanager123.onrender.com/api/endpoint';
+    const apiUrl = 'https://your-django-app.onrender.com/api/';
 
     fetch(apiUrl, {
       method: 'GET',
@@ -27,14 +26,18 @@ class CustomModal extends Component {
       },
       // Add any other fetch options as needed
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
-        // Handle the API response data
         this.setState({ backendData: data });
       })
       .catch(error => {
-        // Handle errors
-        console.error('Error:', error);
+        console.error('Error fetching data:', error);
+        // Handle errors more gracefully in a production environment
       });
   };
 
@@ -50,7 +53,7 @@ class CustomModal extends Component {
   render() {
     const { toggle, onSave } = this.props;
     return (
-      <Modal isOpen={true} toggle={toggle}>
+      <Modal isOpen={this.state.modalIsOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}> Task Item </ModalHeader>
         <ModalBody>
           <Form>
@@ -86,7 +89,6 @@ class CustomModal extends Component {
               </Label>
             </FormGroup>
           </Form>
-          {/* Display data from the backend */}
           {this.state.backendData && (
             <div>
               <h3>Data from Backend:</h3>
