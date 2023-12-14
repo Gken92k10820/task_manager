@@ -4,4 +4,4 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: "backend.settings"
     build_command: pipenv install --dev
-    start_command: pipenv run python manage.py runserver 0.0.0.0:$PORT
+    start_command: pipenv run python manage.py migrate && pipenv run waitress-serve --port $PORT backend.wsgi:application
